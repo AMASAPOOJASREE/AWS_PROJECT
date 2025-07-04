@@ -1,14 +1,20 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+import boto3
+import uuid
 import random
 
-app = Flask(__name__)
-app.secret_key = 'movie-magic-secret'
+app = Flask(_name_)
+app.secret_key = '9a4f90b2b6df594f2e16f6c1f3d9e0ab0cd431c0f0176a2544e740c94cb75a0e'
 
-# Sample users and bookings
-users = []
-bookings = []
+# AWS setup
+region = 'us-east-1'  # Change to your AWS region
+dynamodb = boto3.resource('dynamodb', region_name=region)
+sns = boto3.client('sns', region_name=region)
 
-# Movie list
+users_table = dynamodb.Table('Users')
+bookings_table = dynamodb.Table('Bookings')
+
+# Static movie list
 movies = [
     {"id": 2, "name": "Hanuman", "time": "6:00 PM", "price": 150, "rating": 4.8, "image": "hanuman.jpeg"},
     {"id": 7, "name": "Retro", "time": "3:30 PM", "price": 180, "rating": 4.7, "image": "retro.jpeg"},
@@ -32,11 +38,11 @@ def login():
         email = request.form.get('email')
         password = request.form.get('password')
         remember = request.form.get('remember')
-        user = next((u for u in users if u['email'] == email and u['password'] == password), None)
-        if user:
+        user = users_table.get_item(Key={'email': email}).get('Item')
+
+        if user and user['password'] == password:
             session['user'] = email
-            if remember:
-                session.permanent = True
+            session.permanent = True if remember else False
             return redirect(url_for('home'))
         return render_template('login.html', error='Invalid credentials')
     return render_template('login.html')
@@ -47,9 +53,12 @@ def register():
         email = request.form.get('email')
         password = request.form.get('password')
         phone = request.form.get('phone')
-        if any(u['email'] == email for u in users):
+
+        existing_user = users_table.get_item(Key={'email': email}).get('Item')
+        if existing_user:
             return render_template('register.html', error='User already exists')
-        users.append({'email': email, 'password': password, 'phone': phone})
+
+        users_table.put_item(Item={'email': email, 'password': password, 'phone': phone})
         return redirect(url_for('login'))
     return render_template('register.html')
 
@@ -79,7 +88,6 @@ def book_ticket(id):
     movie = next((m for m in movies if m['id'] == id), None)
     if not movie:
         return "Movie not found.", 404
-
     if request.method == 'POST':
         name = request.form.get('name')
         tickets = request.form.get('tickets')
@@ -87,7 +95,15 @@ def book_ticket(id):
             return render_template("book.html", movie=movie, error="Please fill all fields")
         try:
             tickets = int(tickets)
-            bookings.append({'movie': movie['name'], 'user': name, 'count': tickets})
+            booking_id = str(uuid.uuid4())
+            bookings_table.put_item(Item={
+                'user_email': session['user'],
+                'booking_id': booking_id,
+                'movie_name': movie['name'],
+                'show_time': movie['time'],
+                'tickets': tickets,
+                'booked_by': name
+            })
             return render_template('success.html', movie=movie, name=name, tickets=tickets)
         except ValueError:
             return render_template("book.html", movie=movie, error="Invalid ticket number")
@@ -95,25 +111,33 @@ def book_ticket(id):
 
 @app.route('/admin')
 def admin():
-    return render_template('admin.html', bookings=bookings)
+    all_bookings = bookings_table.scan().get('Items', [])
+    return render_template('admin.html', bookings=all_bookings)
 
 @app.route('/contact')
 def contact():
     return render_template('contact_us.html')
 
-# -------------------- Forgot Password Flow ------------------------
-
 @app.route('/forgot', methods=['GET', 'POST'])
 def forgot():
     if request.method == 'POST':
         email = request.form.get('email')
-        user = next((u for u in users if u['email'] == email), None)
+        user = users_table.get_item(Key={'email': email}).get('Item')
         if user:
             code = random.randint(1000, 9999)
             session['reset_code'] = code
             session['reset_email'] = email
-            print(f"Verification code sent to {email}: {code}")
-            return redirect(url_for('verify_code'))
+
+            # Send SMS using AWS SNS
+            message = f"Your Movie Magic verification code is: {code}"
+            try:
+                sns.publish(
+                    PhoneNumber=user['phone'],  # Must be in E.164 format: +11234567890
+                    Message=message
+                )
+                return redirect(url_for('verify_code'))
+            except Exception as e:
+                return render_template('forgot_password.html', error=f"Failed to send code: {e}")
         else:
             return render_template('forgot_password.html', error="Email not registered.")
     return render_template('forgot_password.html')
@@ -133,14 +157,17 @@ def reset_password():
     if request.method == 'POST':
         new_pass = request.form.get('password')
         email = session.get('reset_email')
-        for user in users:
-            if user['email'] == email:
-                user['password'] = new_pass
-                session.pop('reset_email', None)
-                session.pop('reset_code', None)
-                return redirect(url_for('login'))
+        if email:
+            users_table.update_item(
+                Key={'email': email},
+                UpdateExpression='SET password = :p',
+                ExpressionAttributeValues={':p': new_pass}
+            )
+            session.pop('reset_email', None)
+            session.pop('reset_code', None)
+            return redirect(url_for('login'))
         return "User not found."
     return render_template('reset_password.html')
 
-if __name__ == '__main__':
+if _name_ == '_main_':
     app.run(debug=True)
