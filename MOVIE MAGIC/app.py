@@ -7,12 +7,37 @@ app = Flask(_name_)
 app.secret_key = '9a4f90b2b6df594f2e16f6c1f3d9e0ab0cd431c0f0176a2544e740c94cb75a0e'
 
 # AWS setup
-region = 'us-east-1'  # Change to your AWS region
+region = 'us-east-1'
 dynamodb = boto3.resource('dynamodb', region_name=region)
 sns = boto3.client('sns', region_name=region)
 
-users_table = dynamodb.Table('Users')
-bookings_table = dynamodb.Table('Bookings')
+sns_topic_arn = 'arn:aws:sns:us-east-1:311141554074:MyTopic'  # Replace with your real topic ARN
+
+def send_booking_email(email, movie, date, time, seat, booking_id):
+    message = f"""
+    🎟 Booking Confirmed!
+
+    Movie: {movie}
+    Date: {date}
+    Time: {time}
+    Seat(s): {seat}
+    Booking ID: {booking_id}
+
+    Thank you for booking with us!
+    """
+    try:
+        sns.publish(
+            TopicArn=sns_topic_arn,
+            Message=message,
+            Subject="Your Movie Ticket Booking Confirmation"
+        )
+        return True
+    except Exception as e:
+        print(f"Error sending email via SNS: {e}")
+        return False
+
+users_table = dynamodb.Table('users')
+bookings_table = dynamodb.Table('bookings')
 
 # Static movie list
 movies = [
@@ -58,6 +83,10 @@ def register():
         if existing_user:
             return render_template('register.html', error='User already exists')
 
+        # Basic phone formatting (E.164 format)
+        if not phone.startswith('+'):
+            phone = '+91' + phone  # Default country code, update as needed
+
         users_table.put_item(Item={'email': email, 'password': password, 'phone': phone})
         return redirect(url_for('login'))
     return render_template('register.html')
@@ -96,6 +125,7 @@ def book_ticket(id):
         try:
             tickets = int(tickets)
             booking_id = str(uuid.uuid4())
+
             bookings_table.put_item(Item={
                 'user_email': session['user'],
                 'booking_id': booking_id,
@@ -104,6 +134,17 @@ def book_ticket(id):
                 'tickets': tickets,
                 'booked_by': name
             })
+
+            # Send booking email via SNS
+            send_booking_email(
+                session['user'],
+                movie['name'],
+                "Today",
+                movie['time'],
+                tickets,
+                booking_id
+            )
+
             return render_template('success.html', movie=movie, name=name, tickets=tickets)
         except ValueError:
             return render_template("book.html", movie=movie, error="Invalid ticket number")
@@ -132,7 +173,7 @@ def forgot():
             message = f"Your Movie Magic verification code is: {code}"
             try:
                 sns.publish(
-                    PhoneNumber=user['phone'],  # Must be in E.164 format: +11234567890
+                    PhoneNumber=user['phone'],
                     Message=message
                 )
                 return redirect(url_for('verify_code'))
