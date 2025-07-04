@@ -3,7 +3,7 @@ import boto3
 import uuid
 import random
 
-app = Flask(_name_)
+app = Flask(__name__)
 app.secret_key = '9a4f90b2b6df594f2e16f6c1f3d9e0ab0cd431c0f0176a2544e740c94cb75a0e'
 
 # AWS setup
