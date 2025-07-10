@@ -44,26 +44,44 @@
     }
     
     .register-box {
-      margin-top: 80px;
-      background: rgba(28, 28, 28, 0.95);
-      backdrop-filter: blur(15px);
-      padding: 2.5rem;
-      border-radius: 15px;
-      box-shadow: 
-        0 0 40px rgba(46, 213, 115, 0.5),
-        0 0 80px rgba(0, 184, 148, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(0, 206, 201, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
+  margin-top: 60px;
+  background: rgba(28, 28, 28, 0.95);
+  backdrop-filter: blur(15px);
+  padding: 4rem 3.5rem;
+  /* PERFECT CIRCLE SHAPE */
+  border-radius: 50%;
+  width: 650px;
+  height: 650px;
+  box-shadow: 
+    0 0 50px rgba(46, 213, 115, 0.6),
+    0 0 100px rgba(0, 184, 148, 0.4),
+    inset 0 2px 0 rgba(255, 255, 255, 0.1);
+  border: 3px solid rgba(0, 206, 201, 0.4);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.register-box:hover {
+  transform: scale(1.05) rotate(5deg);
+  box-shadow: 
+    0 0 80px rgba(46, 213, 115, 0.8),
+    0 0 160px rgba(0, 184, 148, 0.6),
+    0 0 200px rgba(0, 206, 201, 0.3);
+  border-color: rgba(0, 206, 201, 0.8);
+}
 
     .register-box::before {
       content: '🎭';
       position: absolute;
-      top: -30px;
-      right: -30px;
-      font-size: 120px;
+      top: -40px;
+      right: -40px;
+      font-size: 140px;
       opacity: 0.1;
       z-index: -1;
       animation: rotate 20s linear infinite;
@@ -72,9 +90,9 @@
     .register-box::after {
       content: '🎪';
       position: absolute;
-      bottom: -30px;
-      left: -30px;
-      font-size: 100px;
+      bottom: -40px;
+      left: -40px;
+      font-size: 120px;
       opacity: 0.1;
       z-index: -1;
       animation: bounce 3s ease-in-out infinite;
@@ -91,15 +109,34 @@
     }
     
     .btn-register {
-      background: linear-gradient(135deg, #2ed573 0%, #00b894 50%, #00cec9 100%);
-      border: none;
-      color: white;
-      font-weight: bold;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
-    }
+  background: linear-gradient(135deg, #2ed573 0%, #00b894 50%, #00cec9 100%);
+  border: none;
+  color: white;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  /* CIRCULAR BUTTON */
+  border-radius: 50px;
+  padding: 15px 30px;
+  width: 200px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-register:hover {
+  background: linear-gradient(135deg, #00cec9 0%, #2ed573 50%, #00b894 100%);
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 
+    0 15px 35px rgba(46, 213, 115, 0.5),
+    0 0 30px rgba(0, 206, 201, 0.7);
+  border-radius: 30px;
+  width: 220px;
+  padding-left: 60px;
+}
 
     .btn-register::before {
       content: '🌟';
@@ -112,21 +149,13 @@
       font-size: 20px;
     }
     
-    .btn-register:hover {
-      background: linear-gradient(135deg, #00cec9 0%, #2ed573 50%, #00b894 100%);
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 
-        0 8px 25px rgba(46, 213, 115, 0.4),
-        0 0 20px rgba(0, 206, 201, 0.6);
-    }
-
     .btn-register:hover::before {
-      left: 15px;
+      left: 20px;
       opacity: 1;
     }
 
     .btn-register:hover {
-      padding-left: 50px;
+      padding-left: 55px;
     }
     
     a {
@@ -184,13 +213,21 @@
     }
 
     .form-control {
-      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.1);
       border: 2px solid rgba(0, 206, 201, 0.3);
+      color: white;
+      transition: all 0.3s ease;
     }
 
     .form-control:focus {
+      background: rgba(255, 255, 255, 0.15);
       border-color: #00cec9;
       box-shadow: 0 0 15px rgba(0, 206, 201, 0.5);
+      color: white;
+    }
+
+    .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.6);
     }
 
     label {
