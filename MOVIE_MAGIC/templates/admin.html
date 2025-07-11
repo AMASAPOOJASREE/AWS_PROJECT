@@ -7,48 +7,368 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <style>
     body {
-      background: linear-gradient(to right, #1f1c2c, #928dab);
+      background: 
+        linear-gradient(135deg, rgba(15, 15, 35, 0.95) 0%, rgba(25, 25, 55, 0.95) 50%, rgba(35, 15, 45, 0.95) 100%),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800"><defs><pattern id="adminGrid" patternUnits="userSpaceOnUse" width="100" height="100"><rect width="100" height="100" fill="%23111"/><rect x="10" y="10" width="80" height="80" rx="8" fill="%23222" opacity="0.4"/><rect x="15" y="15" width="70" height="70" rx="6" fill="%23333" opacity="0.3"/><circle cx="50" cy="50" r="20" fill="none" stroke="%23ff6b35" stroke-width="2" opacity="0.5"/><rect x="40" y="40" width="20" height="20" rx="3" fill="%23ff6b35" opacity="0.3"/></pattern><pattern id="dataFlow" patternUnits="userSpaceOnUse" width="200" height="200"><rect width="200" height="200" fill="transparent"/><circle cx="50" cy="50" r="3" fill="%23ffd700" opacity="0.6"><animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/></circle><circle cx="150" cy="50" r="3" fill="%23ffd700" opacity="0.4"><animate attributeName="opacity" values="0.4;0.8;0.4" dur="2.5s" repeatCount="indefinite"/></circle><circle cx="100" cy="150" r="3" fill="%23ffd700" opacity="0.5"><animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" repeatCount="indefinite"/></circle><line x1="50" y1="50" x2="150" y2="50" stroke="%23ff6b35" stroke-width="1" opacity="0.3"/><line x1="100" y1="50" x2="100" y2="150" stroke="%23ff6b35" stroke-width="1" opacity="0.3"/></pattern></defs><rect width="800" height="800" fill="url(%23adminGrid)"/><rect width="800" height="800" fill="url(%23dataFlow)"/></svg>');
+      background-size: cover, 400px 400px;
+      background-position: center, center;
+      background-attachment: fixed;
       color: #ffffff;
       font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      animation: adminAmbience 20s ease-in-out infinite;
     }
+
+    @keyframes adminAmbience {
+      0%, 100% { 
+        background-position: center, 0px 0px;
+        filter: hue-rotate(0deg) brightness(1);
+      }
+      25% { 
+        background-position: center, 100px 50px;
+        filter: hue-rotate(15deg) brightness(1.1);
+      }
+      50% { 
+        background-position: center, 200px 100px;
+        filter: hue-rotate(30deg) brightness(0.9);
+      }
+      75% { 
+        background-position: center, 300px 150px;
+        filter: hue-rotate(15deg) brightness(1.1);
+      }
+    }
+
+    .admin-container {
+      margin-top: 60px;
+      position: relative;
+      z-index: 2;
+    }
+
     .admin-box {
-      margin-top: 70px;
-      background-color: #121212;
-      padding: 3rem;
-      border-radius: 15px;
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+      background: 
+        linear-gradient(135deg, rgba(20, 20, 40, 0.95) 0%, rgba(40, 20, 60, 0.95) 100%),
+        radial-gradient(circle at 30% 30%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+      backdrop-filter: blur(20px);
+      padding: 4rem 3rem;
+      border-radius: 25px;
+      /* DIAMOND SHAPE */
+      clip-path: polygon(10% 0%, 90% 0%, 100% 25%, 100% 75%, 90% 100%, 10% 100%, 0% 75%, 0% 25%);
+      box-shadow: 
+        0 0 60px rgba(255, 107, 53, 0.4),
+        0 0 120px rgba(255, 215, 0, 0.2),
+        inset 0 2px 0 rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 107, 53, 0.3);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      text-align: center;
     }
+
+    .admin-box:hover {
+      clip-path: polygon(5% 0%, 95% 0%, 100% 20%, 100% 80%, 95% 100%, 5% 100%, 0% 80%, 0% 20%);
+      transform: scale(1.02);
+      box-shadow: 
+        0 0 80px rgba(255, 107, 53, 0.6),
+        0 0 160px rgba(255, 215, 0, 0.3);
+    }
+
+    .admin-box::before {
+      content: '⚙️';
+      position: absolute;
+      top: -40px;
+      right: -40px;
+      font-size: 150px;
+      opacity: 0.1;
+      z-index: -1;
+      animation: rotate 25s linear infinite;
+    }
+
+    .admin-box::after {
+      content: '📊';
+      position: absolute;
+      bottom: -40px;
+      left: -40px;
+      font-size: 120px;
+      opacity: 0.1;
+      z-index: -1;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.1; }
+      50% { transform: scale(1.1); opacity: 0.2; }
+    }
+
     .admin-box h2 {
-      color: #00ffcc;
+      color: #ff6b35;
+      font-size: 2.5rem;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, #ff6b35, #ffd700, #ff6b35);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 3s ease-in-out infinite;
     }
-    .btn-section {
-      margin: 1rem 0;
+
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
     }
+
+    .lead {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.2rem;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+      margin-bottom: 3rem;
+    }
+
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, rgba(255, 107, 53, 0.2) 0%, rgba(255, 215, 0, 0.2) 100%);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      border-radius: 15px;
+      border: 1px solid rgba(255, 107, 53, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ff6b35, #ffd700, #ff6b35);
+      border-radius: 15px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .stat-card:hover::before {
+      opacity: 0.3;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #ffd700;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    }
+
+    .stat-label {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
     .btn-manage {
-      background-color: #ff4081;
+      background: linear-gradient(135deg, #ff6b35 0%, #ff8a50 50%, #ffd700 100%);
       border: none;
+      color: white;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      border-radius: 15px;
+      padding: 15px 25px;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
+
+    .btn-manage::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
     .btn-manage:hover {
-      background-color: #ff5c93;
+      background: linear-gradient(135deg, #ffd700 0%, #ff8a50 50%, #ff6b35 100%);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 
+        0 10px 30px rgba(255, 107, 53, 0.4),
+        0 0 20px rgba(255, 215, 0, 0.6);
+    }
+
+    .btn-manage:hover::before {
+      left: 100%;
+    }
+
+    .management-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .bookings-table {
+      background: rgba(20, 20, 40, 0.8);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 2rem;
+      margin-top: 3rem;
+      border: 1px solid rgba(255, 107, 53, 0.3);
+    }
+
+    .table {
+      color: white;
+    }
+
+    .table th {
+      border-color: rgba(255, 107, 53, 0.3);
+      color: #ff6b35;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .table td {
+      border-color: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .table-hover tbody tr:hover {
+      background-color: rgba(255, 107, 53, 0.1);
+    }
+
+    /* Floating admin elements */
+    body::before {
+      content: '🔧';
+      position: fixed;
+      top: 15%;
+      left: 8%;
+      font-size: 40px;
+      opacity: 0.1;
+      animation: float1 8s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    body::after {
+      content: '📈';
+      position: fixed;
+      bottom: 15%;
+      right: 8%;
+      font-size: 35px;
+      opacity: 0.1;
+      animation: float2 10s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    @keyframes float1 {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-25px) rotate(15deg); }
+    }
+
+    @keyframes float2 {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(25px) rotate(-15deg); }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="admin-box text-center">
-      <h2>🛠️ Admin Panel</h2>
-      <p class="lead">Manage your cinema world from here!</p>
-      <div class="row mt-4">
-        <div class="col-md-4 btn-section">
-          <a href="#" class="btn btn-manage w-100">🎞️ Manage Movies</a>
+  <div class="container admin-container">
+    <div class="admin-box">
+      <h2>🛠️ Admin Control Center</h2>
+      <p class="lead">Master your cinema empire from the command center!</p>
+      
+      <!-- Admin Statistics -->
+      <div class="admin-stats">
+        <div class="stat-card">
+          <div class="stat-number">{{ bookings|length }}</div>
+          <div class="stat-label">Total Bookings</div>
         </div>
-        <div class="col-md-4 btn-section">
-          <a href="#" class="btn btn-manage w-100">👥 Manage Users</a>
+        <div class="stat-card">
+          <div class="stat-number">{{ bookings|sum(attribute='count') or 0 }}</div>
+          <div class="stat-label">Tickets Sold</div>
         </div>
-        <div class="col-md-4 btn-section">
-          <a href="#" class="btn btn-manage w-100">📈 View Bookings</a>
+        <div class="stat-card">
+          <div class="stat-number">₹{{ bookings|sum(attribute='total_amount') or 0 }}</div>
+          <div class="stat-label">Total Revenue</div>
         </div>
       </div>
+
+      <!-- Management Buttons -->
+      <div class="management-grid">
+        <a href="{{ url_for('analytics') }}" class="btn btn-manage">
+          📊 Analytics Dashboard
+        </a>
+        <a href="{{ url_for('movies_page') }}" class="btn btn-manage">
+          🎬 Manage Movies
+        </a>
+        <a href="#users" class="btn btn-manage">
+          👥 User Management
+        </a>
+      </div>
+
+      <!-- Bookings Table -->
+      {% if bookings %}
+      <div class="bookings-table">
+        <h3 style="color: #ffd700; text-align: center; margin-bottom: 2rem;">📋 Recent Bookings</h3>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Booking ID</th>
+                <th>Movie</th>
+                <th>Customer</th>
+                <th>Tickets</th>
+                <th>Amount</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for booking in bookings[-10:] %}
+              <tr>
+                <td>#{{ booking.id or booking.get('id', 'N/A') }}</td>
+                <td>{{ booking.movie }}</td>
+                <td>{{ booking.user }}</td>
+                <td>{{ booking.count }}</td>
+                <td>₹{{ booking.get('total_amount', booking.get('count', 0) * 150) }}</td>
+                <td>{{ booking.get('booking_date', 'N/A')[:10] }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% else %}
+      <div class="bookings-table">
+        <h3 style="color: #ffd700; text-align: center;">📋 No Bookings Yet</h3>
+        <p style="text-align: center; color: rgba(255, 255, 255, 0.7);">
+          Bookings will appear here once customers start booking tickets.
+        </p>
+      </div>
+      {% endif %}
     </div>
   </div>
 </body>
