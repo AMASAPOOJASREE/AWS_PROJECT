@@ -2,267 +2,619 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Register | Movie Magic</title>
+  <title>Join Movie Magic | Register</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       background: 
-        linear-gradient(135deg, rgba(46, 213, 115, 0.8) 0%, rgba(0, 184, 148, 0.8) 50%, rgba(0, 123, 255, 0.7) 100%),
-        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600"><defs><pattern id="tickets" patternUnits="userSpaceOnUse" width="150" height="100"><rect width="150" height="100" fill="transparent"/><rect x="10" y="20" width="130" height="60" rx="8" fill="%2300d4aa" opacity="0.3"/><rect x="15" y="25" width="120" height="50" rx="5" fill="%23ffffff" opacity="0.1"/><circle cx="25" cy="35" r="3" fill="%2300b894" opacity="0.4"/><circle cx="25" cy="50" r="3" fill="%2300b894" opacity="0.4"/><circle cx="25" cy="65" r="3" fill="%2300b894" opacity="0.4"/><rect x="35" y="30" width="2" height="40" fill="%2300a085" opacity="0.3"/><rect x="40" y="35" width="90" height="8" fill="%2300cec9" opacity="0.4"/><rect x="40" y="50" width="70" height="6" fill="%2300b894" opacity="0.3"/><rect x="40" y="60" width="50" height="4" fill="%2300a085" opacity="0.3"/></pattern><pattern id="spotlight" patternUnits="userSpaceOnUse" width="200" height="200"><rect width="200" height="200" fill="transparent"/><circle cx="100" cy="100" r="80" fill="none" stroke="%2300cec9" stroke-width="3" opacity="0.2"/><circle cx="100" cy="100" r="60" fill="none" stroke="%2300d4aa" stroke-width="2" opacity="0.3"/><circle cx="100" cy="100" r="40" fill="none" stroke="%2300e17055" stroke-width="1" opacity="0.4"/><circle cx="100" cy="100" r="20" fill="%2300cec9" opacity="0.2"/><polygon points="100,20 110,40 90,40" fill="%2300b894" opacity="0.3"/><polygon points="100,180 110,160 90,160" fill="%2300b894" opacity="0.3"/><polygon points="20,100 40,110 40,90" fill="%2300b894" opacity="0.3"/><polygon points="180,100 160,110 160,90" fill="%2300b894" opacity="0.3"/></pattern><pattern id="stars" patternUnits="userSpaceOnUse" width="100" height="100"><rect width="100" height="100" fill="transparent"/><polygon points="20,10 22,16 28,16 23,20 25,26 20,22 15,26 17,20 12,16 18,16" fill="%2300cec9" opacity="0.4"/><polygon points="70,30 72,36 78,36 73,40 75,46 70,42 65,46 67,40 62,36 68,36" fill="%2300d4aa" opacity="0.3"/><polygon points="40,60 42,66 48,66 43,70 45,76 40,72 35,76 37,70 32,66 38,66" fill="%2300cec9" opacity="0.4"/><polygon points="80,80 82,86 88,86 83,90 85,96 80,92 75,96 77,90 72,86 78,86" fill="%2300d4aa" opacity="0.3"/><circle cx="30" cy="85" r="2" fill="%23ffffff" opacity="0.6"/><circle cx="85" cy="15" r="1.5" fill="%23ffffff" opacity="0.5"/><circle cx="15" cy="45" r="1" fill="%23ffffff" opacity="0.7"/></pattern><pattern id="curtains" patternUnits="userSpaceOnUse" width="80" height="400"><rect width="80" height="400" fill="%2300b894" opacity="0.3"/><path d="M0,0 Q40,20 80,0 L80,50 Q40,70 0,50 Z" fill="%2300d4aa" opacity="0.4"/><path d="M0,50 Q40,70 80,50 L80,100 Q40,120 0,100 Z" fill="%2300b894" opacity="0.4"/><path d="M0,100 Q40,120 80,100 L80,150 Q40,170 0,150 Z" fill="%2300d4aa" opacity="0.4"/><path d="M0,150 Q40,170 80,150 L80,200 Q40,220 0,200 Z" fill="%2300b894" opacity="0.4"/><path d="M0,200 Q40,220 80,200 L80,250 Q40,270 0,250 Z" fill="%2300d4aa" opacity="0.4"/><path d="M0,250 Q40,270 80,250 L80,300 Q40,320 0,300 Z" fill="%2300b894" opacity="0.4"/><path d="M0,300 Q40,320 80,300 L80,350 Q40,370 0,350 Z" fill="%2300d4aa" opacity="0.4"/><path d="M0,350 Q40,370 80,350 L80,400 Q40,420 0,400 Z" fill="%2300b894" opacity="0.4"/></pattern></defs><rect width="600" height="600" fill="url(%23curtains)"/><rect width="600" height="600" fill="url(%23tickets)"/><rect width="600" height="600" fill="url(%23spotlight)"/><rect width="600" height="600" fill="url(%23stars)"/></svg>');
+        linear-gradient(135deg, 
+          rgba(20, 25, 45, 0.95) 0%, 
+          rgba(35, 25, 55, 0.95) 25%,
+          rgba(50, 35, 70, 0.95) 50%,
+          rgba(35, 25, 55, 0.95) 75%,
+          rgba(20, 25, 45, 0.95) 100%
+        ),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="theaterSeats" patternUnits="userSpaceOnUse" width="120" height="80"><rect width="120" height="80" fill="transparent"/><rect x="15" y="20" width="90" height="40" rx="8" fill="%23333" opacity="0.2"/><rect x="20" y="25" width="80" height="30" rx="6" fill="%23444" opacity="0.3"/><circle cx="30" cy="35" r="3" fill="%23555" opacity="0.4"/><circle cx="50" cy="35" r="3" fill="%23555" opacity="0.4"/><circle cx="70" cy="35" r="3" fill="%23555" opacity="0.4"/><circle cx="90" cy="35" r="3" fill="%23555" opacity="0.4"/><rect x="40" y="45" width="40" height="8" rx="4" fill="%23666" opacity="0.3"/></pattern><pattern id="filmReels" patternUnits="userSpaceOnUse" width="200" height="200"><rect width="200" height="200" fill="transparent"/><circle cx="60" cy="60" r="35" fill="none" stroke="%23444" stroke-width="2" opacity="0.2"/><circle cx="60" cy="60" r="25" fill="none" stroke="%23555" stroke-width="1" opacity="0.3"/><circle cx="60" cy="60" r="15" fill="%23333" opacity="0.2"/><circle cx="140" cy="140" r="35" fill="none" stroke="%23444" stroke-width="2" opacity="0.2"/><circle cx="140" cy="140" r="25" fill="none" stroke="%23555" stroke-width="1" opacity="0.3"/><circle cx="140" cy="140" r="15" fill="%23333" opacity="0.2"/><rect x="55" y="25" width="10" height="8" fill="%23666" opacity="0.3"/><rect x="55" y="87" width="10" height="8" fill="%23666" opacity="0.3"/><rect x="25" y="55" width="8" height="10" fill="%23666" opacity="0.3"/><rect x="87" y="55" width="8" height="10" fill="%23666" opacity="0.3"/></pattern><pattern id="curtainPattern" patternUnits="userSpaceOnUse" width="60" height="400"><rect width="60" height="400" fill="%238b0000" opacity="0.1"/><path d="M0,0 Q30,20 60,0 L60,50 Q30,70 0,50 Z" fill="%23a0522d" opacity="0.15"/><path d="M0,50 Q30,70 60,50 L60,100 Q30,120 0,100 Z" fill="%238b0000" opacity="0.1"/><path d="M0,100 Q30,120 60,100 L60,150 Q30,170 0,150 Z" fill="%23a0522d" opacity="0.15"/><path d="M0,150 Q30,170 60,150 L60,200 Q30,220 0,200 Z" fill="%238b0000" opacity="0.1"/></pattern></defs><rect width="1000" height="1000" fill="url(%23theaterSeats)"/><rect width="1000" height="1000" fill="url(%23filmReels)"/><rect width="1000" height="1000" fill="url(%23curtainPattern)"/></svg>');
       background-size: cover, 300px 300px;
       background-position: center, center;
       background-attachment: fixed;
       color: white;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Inter', sans-serif;
       min-height: 100vh;
-      animation: theaterLights 15s ease-in-out infinite;
+      animation: theaterAmbience 30s ease-in-out infinite;
     }
 
-    @keyframes theaterLights {
+    @keyframes theaterAmbience {
       0%, 100% { 
         background-position: center, 0px 0px;
-        filter: hue-rotate(0deg);
+        filter: hue-rotate(0deg) brightness(1);
       }
       25% { 
-        background-position: center, 50px 50px;
-        filter: hue-rotate(10deg);
+        background-position: center, 75px 50px;
+        filter: hue-rotate(10deg) brightness(1.05);
       }
       50% { 
-        background-position: center, 100px 100px;
-        filter: hue-rotate(20deg);
+        background-position: center, 150px 100px;
+        filter: hue-rotate(20deg) brightness(0.95);
       }
       75% { 
-        background-position: center, 150px 150px;
-        filter: hue-rotate(10deg);
+        background-position: center, 225px 150px;
+        filter: hue-rotate(10deg) brightness(1.05);
       }
     }
-    
+
+    /* SUBTLE FLOATING ELEMENTS */
+    .floating-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .floating-element {
+      position: absolute;
+      font-size: 28px;
+      opacity: 0.06;
+      animation-duration: 35s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+    }
+
+    .element-1 { top: 15%; left: 8%; animation-name: gentleFloat1; animation-delay: 0s; }
+    .element-2 { top: 70%; right: 12%; animation-name: gentleFloat2; animation-delay: 10s; }
+    .element-3 { bottom: 25%; left: 15%; animation-name: gentleFloat3; animation-delay: 20s; }
+
+    @keyframes gentleFloat1 {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.06; }
+      50% { transform: translateY(-12px) rotate(5deg); opacity: 0.12; }
+    }
+
+    @keyframes gentleFloat2 {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.06; }
+      50% { transform: translateY(8px) rotate(-3deg); opacity: 0.1; }
+    }
+
+    @keyframes gentleFloat3 {
+      0%, 100% { transform: translateX(0px) rotate(0deg); opacity: 0.06; }
+      50% { transform: translateX(6px) rotate(2deg); opacity: 0.1; }
+    }
+
+    /* MAIN CONTAINER */
     .container {
       position: relative;
-      z-index: 2;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1rem;
     }
-    
+
+    /* ELEGANT REGISTER BOX */
     .register-box {
-  margin-top: 60px;
-  background: rgba(28, 28, 28, 0.95);
-  backdrop-filter: blur(15px);
-  padding: 4rem 3.5rem;
-  /* PERFECT CIRCLE SHAPE */
-  border-radius: 50%;
-  width: 650px;
-  height: 650px;
-  box-shadow: 
-    0 0 50px rgba(46, 213, 115, 0.6),
-    0 0 100px rgba(0, 184, 148, 0.4),
-    inset 0 2px 0 rgba(255, 255, 255, 0.1);
-  border: 3px solid rgba(0, 206, 201, 0.4);
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s ease;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+      background: 
+        linear-gradient(135deg, 
+          rgba(255, 255, 255, 0.09) 0%, 
+          rgba(255, 255, 255, 0.05) 50%, 
+          rgba(255, 255, 255, 0.09) 100%
+        );
+      backdrop-filter: blur(25px);
+      padding: 3.5rem 3rem;
+      /* ELEGANT ROUNDED RECTANGLE WITH SUBTLE CURVES */
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 
+        0 25px 70px rgba(0, 0, 0, 0.4),
+        inset 0 2px 0 rgba(255, 255, 255, 0.1),
+        0 0 0 1px rgba(139, 69, 19, 0.1);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      max-width: 480px;
+      width: 100%;
+    }
 
-.register-box:hover {
-  transform: scale(1.05) rotate(5deg);
-  box-shadow: 
-    0 0 80px rgba(46, 213, 115, 0.8),
-    0 0 160px rgba(0, 184, 148, 0.6),
-    0 0 200px rgba(0, 206, 201, 0.3);
-  border-color: rgba(0, 206, 201, 0.8);
-}
+    .register-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 
+        0 35px 90px rgba(0, 0, 0, 0.5),
+        inset 0 2px 0 rgba(255, 255, 255, 0.15),
+        0 0 0 1px rgba(139, 69, 19, 0.2);
+    }
 
+    /* THEATER CURTAIN ACCENT */
     .register-box::before {
-      content: '🎭';
+      content: '';
       position: absolute;
-      top: -40px;
-      right: -40px;
-      font-size: 140px;
-      opacity: 0.1;
-      z-index: -1;
-      animation: rotate 20s linear infinite;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, 
+        rgba(139, 0, 0, 0.6) 0%, 
+        rgba(160, 82, 45, 0.6) 25%,
+        rgba(139, 0, 0, 0.6) 50%,
+        rgba(160, 82, 45, 0.6) 75%,
+        rgba(139, 0, 0, 0.6) 100%
+      );
+      border-radius: 24px 24px 0 0;
     }
 
     .register-box::after {
-      content: '🎪';
+      content: '';
       position: absolute;
-      bottom: -40px;
-      left: -40px;
-      font-size: 120px;
-      opacity: 0.1;
-      z-index: -1;
-      animation: bounce 3s ease-in-out infinite;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, 
+        rgba(139, 0, 0, 0.6) 0%, 
+        rgba(160, 82, 45, 0.6) 25%,
+        rgba(139, 0, 0, 0.6) 50%,
+        rgba(160, 82, 45, 0.6) 75%,
+        rgba(139, 0, 0, 0.6) 100%
+      );
+      border-radius: 0 0 24px 24px;
     }
 
-    @keyframes rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+    /* ELEGANT TITLE */
+    .register-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+      position: relative;
+      letter-spacing: -0.5px;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
+    .register-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 300;
+      text-align: center;
+      margin-bottom: 2.5rem;
+      color: rgba(255, 255, 255, 0.8);
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+      line-height: 1.5;
     }
-    
-    .btn-register {
-  background: linear-gradient(135deg, #2ed573 0%, #00b894 50%, #00cec9 100%);
-  border: none;
-  color: white;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-  transition: all 0.4s ease;
-  position: relative;
-  overflow: hidden;
-  /* CIRCULAR BUTTON */
-  border-radius: 50px;
-  padding: 15px 30px;
-  width: 200px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.btn-register:hover {
-  background: linear-gradient(135deg, #00cec9 0%, #2ed573 50%, #00b894 100%);
-  transform: translateY(-3px) scale(1.1);
-  box-shadow: 
-    0 15px 35px rgba(46, 213, 115, 0.5),
-    0 0 30px rgba(0, 206, 201, 0.7);
-  border-radius: 30px;
-  width: 220px;
-  padding-left: 60px;
-}
-
-    .btn-register::before {
-      content: '🌟';
+    .register-title::after {
+      content: '';
       position: absolute;
-      left: -40px;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #a0522d, transparent);
+      border-radius: 1px;
+    }
+
+    /* FORM STYLING */
+    .form-group {
+      margin-bottom: 1.8rem;
+      position: relative;
+    }
+
+    .form-label {
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      color: #ffffff;
+      display: block;
+      margin-bottom: 0.6rem;
+      font-size: 0.95rem;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+
+    .form-label::before {
+      content: '';
+      position: absolute;
+      left: -12px;
       top: 50%;
       transform: translateY(-50%);
-      transition: all 0.4s ease;
-      opacity: 0;
-      font-size: 20px;
-    }
-    
-    .btn-register:hover::before {
-      left: 20px;
-      opacity: 1;
-    }
-
-    .btn-register:hover {
-      padding-left: 55px;
-    }
-    
-    a {
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    a:hover {
-      text-shadow: 0 0 10px currentColor;
-    }
-    
-    footer {
-      text-align: center;
-      color: rgba(255, 255, 255, 0.9);
-      margin-top: 40px;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-    }
-
-    h2 {
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-      position: relative;
-      background: linear-gradient(45deg, #00cec9, #2ed573, #00cec9);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: shimmer 3s ease-in-out infinite;
-    }
-
-    @keyframes shimmer {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-
-    h2::before {
-      content: '🎬';
-      position: absolute;
-      left: -50px;
-      top: 0;
-      opacity: 0.8;
-      animation: pulse 2s ease-in-out infinite;
-    }
-
-    h2::after {
-      content: '🎟️';
-      position: absolute;
-      right: -50px;
-      top: 0;
-      opacity: 0.8;
-      animation: pulse 2s ease-in-out infinite reverse;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.8; }
-      50% { transform: scale(1.2); opacity: 1; }
+      width: 3px;
+      height: 12px;
+      background: #a0522d;
+      border-radius: 2px;
+      opacity: 0.7;
     }
 
     .form-control {
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(0, 206, 201, 0.3);
-      color: white;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #ffffff;
+      padding: 14px 18px;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
       transition: all 0.3s ease;
+      width: 100%;
+      position: relative;
     }
 
     .form-control:focus {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: #00cec9;
-      box-shadow: 0 0 15px rgba(0, 206, 201, 0.5);
-      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(160, 82, 45, 0.6);
+      box-shadow: 
+        0 0 0 3px rgba(160, 82, 45, 0.15),
+        0 4px 12px rgba(0, 0, 0, 0.2);
+      color: #ffffff;
+      outline: none;
+      transform: translateY(-1px);
     }
 
     .form-control::placeholder {
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(255, 255, 255, 0.5);
+      font-style: italic;
     }
 
-    label {
-      font-weight: bold;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    /* ELEGANT REGISTER BUTTON */
+    .btn-register {
+      background: linear-gradient(135deg, 
+        rgba(160, 82, 45, 0.9) 0%, 
+        rgba(139, 69, 19, 0.9) 50%,
+        rgba(160, 82, 45, 0.9) 100%
+      );
+      border: 1px solid rgba(160, 82, 45, 0.4);
+      color: #ffffff;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.4s ease;
+      border-radius: 10px;
+      padding: 16px 32px;
+      font-size: 1.1rem;
+      width: 100%;
+      cursor: pointer;
+      text-transform: none;
+      letter-spacing: 0.5px;
+      position: relative;
+      overflow: hidden;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      margin-top: 1rem;
+    }
+
+    .btn-register::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .btn-register:hover {
+      background: linear-gradient(135deg, 
+        #a0522d 0%, 
+        #8b4513 50%,
+        #a0522d 100%
+      );
+      transform: translateY(-3px);
+      box-shadow: 
+        0 12px 30px rgba(160, 82, 45, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      border-color: rgba(160, 82, 45, 0.6);
+    }
+
+    .btn-register:hover::before {
+      left: 100%;
+    }
+
+    .btn-register:active {
+      transform: translateY(-1px);
+    }
+
+    /* ERROR STYLING */
+    .error {
+      color: #f1948a;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+      padding: 12px;
+      background: rgba(241, 148, 138, 0.1);
+      border-radius: 8px;
+      border: 1px solid rgba(241, 148, 138, 0.2);
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* LINKS STYLING */
+    .register-links {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .register-links a {
+      color: #a0522d;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      font-family: 'Inter', sans-serif;
+      position: relative;
+    }
+
+    .register-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: #a0522d;
+      transition: width 0.3s ease;
+    }
+
+    .register-links a:hover {
+      color: #d2691e;
+      text-shadow: 0 0 8px rgba(160, 82, 45, 0.4);
+    }
+
+    .register-links a:hover::after {
+      width: 100%;
+    }
+
+    /* FOOTER */
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.2rem;
+      background: linear-gradient(90deg, 
+        rgba(20, 25, 45, 0.9) 0%, 
+        rgba(35, 25, 55, 0.9) 50%, 
+        rgba(20, 25, 45, 0.9) 100%
+      );
+      backdrop-filter: blur(15px);
+      border-top: 1px solid rgba(160, 82, 45, 0.2);
+      color: rgba(255, 255, 255, 0.7);
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 300;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      z-index: 5;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 768px) {
+      .register-box {
+        padding: 2.5rem 2rem;
+        margin: 1rem;
+        max-width: 400px;
+      }
+      
+      .register-title {
+        font-size: 2rem;
+      }
+      
+      .floating-element {
+        font-size: 22px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .register-box {
+        padding: 2rem 1.5rem;
+        margin: 0.5rem;
+      }
+      
+      .register-title {
+        font-size: 1.8rem;
+      }
+      
+      .register-subtitle {
+        font-size: 0.9rem;
+      }
+      
+      .form-control {
+        padding: 12px 16px;
+      }
+      
+      .btn-register {
+        padding: 14px 28px;
+        font-size: 1rem;
+      }
+    }
+
+    /* SUBTLE GLOW EFFECT */
+    .register-box:hover::before {
+      box-shadow: 0 0 20px rgba(160, 82, 45, 0.3);
+    }
+
+    .register-box:hover::after {
+      box-shadow: 0 0 20px rgba(160, 82, 45, 0.3);
+    }
+
+    /* LOADING ANIMATION */
+    .page-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #141929 0%, #23193b 50%, #141929 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      animation: fadeOut 1.2s ease-in-out 0.6s forwards;
+    }
+
+    .loader-content {
+      text-align: center;
+    }
+
+    .loader-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: #a0522d;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    .loader-bar {
+      width: 180px;
+      height: 2px;
+      background: rgba(160, 82, 45, 0.2);
+      border-radius: 1px;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+
+    .loader-progress {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, #a0522d, transparent);
+      animation: loading 1.2s ease-in-out forwards;
+    }
+
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
+    }
+
+    @keyframes loading {
+      0% { width: 0%; }
+      100% { width: 100%; }
     }
   </style>
 </head>
 <body>
-  <div class="container d-flex justify-content-center">
-    <div class="register-box col-md-5">
-      <h2 class="text-center mb-4">📝 Register to Movie Magic</h2>
-      {% if error %}
-      <div class="alert alert-danger">{{ error }}</div>
-      {% endif %}
-      <form method="POST">
-        <div class="mb-3">
-          <label>Email:</label>
-          <input type="email" name="email" class="form-control" required>
-        </div>
-        <div class="mb-3">
-          <label>Password:</label>
-          <input type="password" name="password" class="form-control" required>
-        </div>
-        <div class="mb-3">
-          <label>Phone:</label>
-          <input type="text" name="phone" class="form-control" required>
-        </div>
-        <button type="submit" class="btn btn-register w-100">Register</button>
-      </form>
-      <p class="mt-3 text-center">
-        🔐 Already have an account? <a href="{{ url_for('login') }}" class="text-warning">Login here</a>
-      </p>
+  <!-- ELEGANT PAGE LOADER -->
+  <div class="page-loader">
+    <div class="loader-content">
+      <div class="loader-text">Join Movie Magic</div>
+      <div class="loader-bar">
+        <div class="loader-progress"></div>
+      </div>
     </div>
   </div>
-  <footer>© 2025 Movie Magic 🎬</footer>
+
+  <!-- SUBTLE FLOATING ELEMENTS -->
+  <div class="floating-elements">
+    <div class="floating-element element-1">🎭</div>
+    <div class="floating-element element-2">🎪</div>
+    <div class="floating-element element-3">🎨</div>
+  </div>
+
+  <!-- MAIN CONTAINER -->
+  <div class="container">
+    <div class="register-box">
+      <h2 class="register-title">Join Movie Magic</h2>
+      <p class="register-subtitle">Create your account and unlock a world of cinematic experiences</p>
+      
+      {% if error %}
+      <div class="error">{{ error }}</div>
+      {% endif %}
+      
+      <form method="POST">
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <input type="email" name="email" class="form-control" placeholder="Enter your email address" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" name="password" class="form-control" placeholder="Create a secure password" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone" class="form-label">Phone Number</label>
+          <input type="tel" name="phone" class="form-control" placeholder="Enter your phone number" required>
+        </div>
+        
+        <button type="submit" class="btn-register">
+          Create Account
+        </button>
+      </form>
+      
+      <div class="register-links">
+        <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 0.5rem;">Already have an account?</p>
+        <a href="{{ url_for('login') }}">Sign in to your account</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELEGANT FOOTER -->
+  <footer class="footer">
+    Begin your cinematic journey with Movie Magic
+  </footer>
+
+  <script>
+    // Elegant form interactions
+    document.addEventListener('DOMContentLoaded', function() {
+      // Enhanced focus effects
+      document.querySelectorAll('.form-control').forEach(input => {
+        input.addEventListener('focus', function() {
+          this.parentElement.style.transform = 'translateY(-2px)';
+          this.parentElement.style.transition = 'transform 0.3s ease';
+        });
+        
+        input.addEventListener('blur', function() {
+          this.parentElement.style.transform = 'translateY(0px)';
+        });
+
+        // Floating label effect
+        input.addEventListener('input', function() {
+          if (this.value.length > 0) {
+            this.style.paddingTop = '20px';
+            this.style.paddingBottom = '8px';
+          } else {
+            this.style.paddingTop = '14px';
+            this.style.paddingBottom = '14px';
+          }
+        });
+      });
+
+      // Button interaction enhancement
+      const registerBtn = document.querySelector('.btn-register');
+      registerBtn.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-3px)';
+      });
+      
+      registerBtn.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0px)';
+      });
+
+      // Form validation visual feedback
+      const form = document.querySelector('form');
+      form.addEventListener('submit', function(e) {
+        const inputs = form.querySelectorAll('.form-control');
+        let isValid = true;
+        
+        inputs.forEach(input => {
+          if (!input.value.trim()) {
+            input.style.borderColor = 'rgba(241, 148, 138, 0.6)';
+            input.style.boxShadow = '0 0 0 3px rgba(241, 148, 138, 0.15)';
+            isValid = false;
+          } else {
+            input.style.borderColor = 'rgba(160, 82, 45, 0.6)';
+            input.style.boxShadow = '0 0 0 3px rgba(160, 82, 45, 0.15)';
+          }
+        });
+        
+        if (!isValid) {
+          e.preventDefault();
+        }
+      });
+    });
+  </script>
 </body>
 </html>
