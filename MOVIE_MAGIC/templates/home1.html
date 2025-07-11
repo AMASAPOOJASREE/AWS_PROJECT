@@ -4,47 +4,464 @@
   <meta charset="UTF-8">
   <title>Welcome | Movie Magic</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      background: radial-gradient(circle, #0f2027, #203a43, #2c5364);
-      color: white;
-      font-family: 'Segoe UI', sans-serif;
+      background: 
+        linear-gradient(135deg, 
+          rgba(15, 15, 25, 0.95) 0%, 
+          rgba(25, 25, 40, 0.95) 50%, 
+          rgba(35, 35, 55, 0.95) 100%
+        ),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800"><defs><pattern id="elegantGrid" patternUnits="userSpaceOnUse" width="80" height="80"><rect width="80" height="80" fill="%23111"/><rect x="1" y="1" width="78" height="78" fill="none" stroke="%23333" stroke-width="0.5" opacity="0.3"/><circle cx="40" cy="40" r="1" fill="%23666" opacity="0.4"/></pattern><pattern id="subtleFilm" patternUnits="userSpaceOnUse" width="120" height="400"><rect width="120" height="400" fill="transparent"/><rect x="20" y="0" width="80" height="60" fill="%23222" opacity="0.2"/><rect x="20" y="80" width="80" height="60" fill="%23333" opacity="0.2"/><rect x="20" y="160" width="80" height="60" fill="%23222" opacity="0.2"/><rect x="20" y="240" width="80" height="60" fill="%23333" opacity="0.2"/><rect x="20" y="320" width="80" height="60" fill="%23222" opacity="0.2"/><circle cx="30" cy="30" r="3" fill="%23000" opacity="0.3"/><circle cx="90" cy="30" r="3" fill="%23000" opacity="0.3"/><circle cx="30" cy="110" r="3" fill="%23000" opacity="0.3"/><circle cx="90" cy="110" r="3" fill="%23000" opacity="0.3"/></pattern></defs><rect width="800" height="800" fill="url(%23elegantGrid)"/><rect width="800" height="800" fill="url(%23subtleFilm)"/></svg>');
+      background-size: cover, 200px 200px;
+      background-position: center, center;
+      background-attachment: fixed;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* SUBTLE FLOATING ELEMENTS */
+    .floating-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .floating-element {
+      position: absolute;
+      font-size: 24px;
+      opacity: 0.05;
+      animation-duration: 30s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+    }
+
+    .element-1 { top: 15%; left: 10%; animation-name: gentleFloat1; }
+    .element-2 { top: 25%; right: 15%; animation-name: gentleFloat2; }
+    .element-3 { bottom: 30%; left: 12%; animation-name: gentleFloat3; }
+    .element-4 { bottom: 20%; right: 10%; animation-name: gentleFloat4; }
+
+    @keyframes gentleFloat1 {
+      0%, 100% { transform: translateY(0px); opacity: 0.05; }
+      50% { transform: translateY(-15px); opacity: 0.1; }
+    }
+
+    @keyframes gentleFloat2 {
+      0%, 100% { transform: translateY(0px); opacity: 0.05; }
+      50% { transform: translateY(10px); opacity: 0.08; }
+    }
+
+    @keyframes gentleFloat3 {
+      0%, 100% { transform: translateX(0px); opacity: 0.05; }
+      50% { transform: translateX(8px); opacity: 0.1; }
+    }
+
+    @keyframes gentleFloat4 {
+      0%, 100% { transform: translateX(0px); opacity: 0.05; }
+      50% { transform: translateX(-8px); opacity: 0.08; }
+    }
+
+    /* MAIN CONTAINER */
+    .main-container {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    /* ELEGANT HERO SECTION */
+    .hero-section {
+      background: 
+        linear-gradient(135deg, 
+          rgba(255, 255, 255, 0.08) 0%, 
+          rgba(255, 255, 255, 0.04) 50%, 
+          rgba(255, 255, 255, 0.08) 100%
+        );
+      backdrop-filter: blur(20px);
+      padding: 4rem 3rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      max-width: 800px;
+      margin: 0 auto;
+      transition: all 0.3s ease;
+    }
+
+    .hero-section:hover {
+      transform: translateY(-5px);
+      box-shadow: 
+        0 30px 80px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    /* ELEGANT TITLE */
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: #ffffff;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+      position: relative;
+      letter-spacing: -1px;
+      line-height: 1.2;
+    }
+
+    .hero-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      border-radius: 1px;
+    }
+
+    /* ELEGANT SUBTITLE */
+    .hero-subtitle {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      font-weight: 300;
+      margin-bottom: 3rem;
+      color: rgba(255, 255, 255, 0.85);
+      text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+      line-height: 1.6;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* BUTTON CONTAINER */
+    .button-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      align-items: center;
+      margin-top: 2rem;
+    }
+
+    /* ELEGANT BUTTONS */
+    .btn-elegant {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 14px 28px;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #ffffff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      text-transform: none;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 160px;
+      backdrop-filter: blur(10px);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn-elegant::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn-elegant:hover {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+    }
+
+    .btn-elegant:hover::before {
+      left: 100%;
+    }
+
+    .btn-elegant:active {
+      transform: translateY(0px);
+    }
+
+    /* INDIVIDUAL BUTTON ACCENTS */
+    .btn-movies {
+      border-left: 3px solid #d4af37;
+    }
+
+    .btn-movies:hover {
+      border-left-color: #f4d03f;
+      box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        -3px 0 15px rgba(212, 175, 55, 0.3);
+    }
+
+    .btn-contact {
+      border-left: 3px solid #85c1e9;
+    }
+
+    .btn-contact:hover {
+      border-left-color: #aed6f1;
+      box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        -3px 0 15px rgba(133, 193, 233, 0.3);
+    }
+
+    .btn-logout {
+      border-left: 3px solid #f1948a;
+    }
+
+    .btn-logout:hover {
+      border-left-color: #f5b7b1;
+      box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+        -3px 0 15px rgba(241, 148, 138, 0.3);
+    }
+
+    /* ELEGANT FOOTER */
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem;
+      background: linear-gradient(90deg, 
+        rgba(15, 15, 25, 0.9) 0%, 
+        rgba(25, 25, 40, 0.9) 50%, 
+        rgba(15, 15, 25, 0.9) 100%
+      );
+      backdrop-filter: blur(15px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 300;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      z-index: 5;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 768px) {
+      .hero-section {
+        padding: 2.5rem 2rem;
+        margin: 1rem;
+      }
+      
+      .button-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .btn-elegant {
+        width: 100%;
+        max-width: 280px;
+      }
+      
+      .floating-element {
+        font-size: 18px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-section {
+        padding: 2rem 1.5rem;
+      }
+      
+      .hero-title {
+        font-size: 2rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+    }
+
+    /* SUBTLE LOADING ANIMATION */
+    .page-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0f0f19 0%, #191928 50%, #0f0f19 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      animation: fadeOut 1.5s ease-in-out 0.8s forwards;
+    }
+
+    .loader-content {
       text-align: center;
     }
-    .container {
-      margin-top: 100px;
+
+    .loader-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: #ffffff;
+      margin-bottom: 1rem;
+      opacity: 0.9;
     }
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 30px;
-      color: #00e0ff;
+
+    .loader-bar {
+      width: 200px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 1px;
+      overflow: hidden;
+      margin: 0 auto;
     }
-    .btn-custom {
-      background-color: #ff4081;
-      border: none;
-      padding: 10px 25px;
-      font-size: 18px;
-      margin: 10px;
-      color: white;
+
+    .loader-progress {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, #d4af37, transparent);
+      animation: loading 1.5s ease-in-out forwards;
     }
-    .btn-custom:hover {
-      background-color: #ff5c93;
+
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
     }
-    footer {
-      margin-top: 60px;
-      color: #aaa;
+
+    @keyframes loading {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    /* SUBTLE GLOW EFFECTS */
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, 
+        rgba(212, 175, 55, 0.1) 0%, 
+        rgba(133, 193, 233, 0.1) 50%, 
+        rgba(241, 148, 138, 0.1) 100%
+      );
+      border-radius: 22px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .hero-section:hover::before {
+      opacity: 1;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🎥 Welcome to Movie Magic!</h1>
-    <p>Explore the latest blockbusters and book your seats now!</p>
-    <a href="{{ url_for('movies_page') }}" class="btn btn-custom">🎬 View Movies</a>
-    <a href="{{ url_for('contact') }}" class="btn btn-custom">📞 Contact Us</a>
-    <a href="{{ url_for('logout') }}" class="btn btn-custom">🚪 Logout</a>
+  <!-- ELEGANT PAGE LOADER -->
+  <div class="page-loader">
+    <div class="loader-content">
+      <div class="loader-text">Movie Magic</div>
+      <div class="loader-bar">
+        <div class="loader-progress"></div>
+      </div>
+    </div>
   </div>
-  <footer>Enjoy the show with Movie Magic 🍿</footer>
+
+  <!-- SUBTLE FLOATING ELEMENTS -->
+  <div class="floating-elements">
+    <div class="floating-element element-1">🎬</div>
+    <div class="floating-element element-2">🍿</div>
+    <div class="floating-element element-3">🎭</div>
+    <div class="floating-element element-4">🎪</div>
+  </div>
+
+  <!-- MAIN CONTAINER -->
+  <div class="main-container">
+    <div class="hero-section">
+      <h1 class="hero-title">Welcome to Movie Magic</h1>
+      <p class="hero-subtitle">
+        Embark on an extraordinary cinematic journey.<br>
+        Discover blockbusters, reserve premium seats, and create unforgettable memories.
+      </p>
+      
+      <div class="button-container">
+        <a href="{{ url_for('movies_page') }}" class="btn-elegant btn-movies">
+          🎬 Explore Movies
+        </a>
+        <a href="{{ url_for('contact') }}" class="btn-elegant btn-contact">
+          📞 Get in Touch
+        </a>
+        <a href="{{ url_for('logout') }}" class="btn-elegant btn-logout">
+          🚪 Sign Out
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ELEGANT FOOTER -->
+  <footer class="footer">
+    Experience the magic of cinema with sophistication and style
+  </footer>
+
+  <script>
+    // Subtle interactive enhancements
+    document.addEventListener('DOMContentLoaded', function() {
+      // Smooth button interactions
+      document.querySelectorAll('.btn-elegant').forEach(button => {
+        button.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-2px)';
+        });
+        
+        button.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0px)';
+        });
+      });
+
+      // Subtle parallax effect
+      window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const parallax = document.querySelector('.floating-elements');
+        if (parallax) {
+          parallax.style.transform = `translateY(${scrolled * 0.1}px)`;
+        }
+      });
+    });
+  </script>
 </body>
 </html>
