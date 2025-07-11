@@ -2,108 +2,589 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>🎟 Book Tickets | Movie Magic</title>
+    <title>Book Tickets | Movie Magic</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background: linear-gradient(120deg, #1e1e2f, #121212);
-            color: #f0f0f0;
-            font-family: 'Segoe UI', sans-serif;
+            background: 
+                linear-gradient(135deg, 
+                    rgba(15, 15, 25, 0.95) 0%, 
+                    rgba(25, 25, 40, 0.95) 50%, 
+                    rgba(35, 35, 55, 0.95) 100%
+                ),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800"><defs><pattern id="elegantGrid" patternUnits="userSpaceOnUse" width="80" height="80"><rect width="80" height="80" fill="%23111"/><rect x="1" y="1" width="78" height="78" fill="none" stroke="%23333" stroke-width="0.5" opacity="0.3"/><circle cx="40" cy="40" r="1" fill="%23666" opacity="0.4"/></pattern></defs><rect width="800" height="800" fill="url(%23elegantGrid)"/></svg>');
+            background-size: cover, 200px 200px;
+            background-position: center, center;
+            background-attachment: fixed;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            padding: 2rem 0;
         }
 
-        .container {
-            max-width: 500px;
-            margin: 80px auto;
-            background-color: #222;
-            padding: 30px 40px;
+        /* SUBTLE FLOATING ELEMENTS */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-element {
+            position: absolute;
+            font-size: 20px;
+            opacity: 0.04;
+            animation-duration: 25s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+        }
+
+        .element-1 { top: 20%; left: 10%; animation-name: gentleFloat1; }
+        .element-2 { top: 60%; right: 15%; animation-name: gentleFloat2; }
+
+        @keyframes gentleFloat1 {
+            0%, 100% { transform: translateY(0px); opacity: 0.04; }
+            50% { transform: translateY(-10px); opacity: 0.08; }
+        }
+
+        @keyframes gentleFloat2 {
+            0%, 100% { transform: translateY(0px); opacity: 0.04; }
+            50% { transform: translateY(8px); opacity: 0.06; }
+        }
+
+        /* MAIN CONTAINER */
+        .booking-container {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+            padding: 0 1rem;
+        }
+
+        /* ELEGANT BOOKING CARD */
+        .booking-card {
+            background: 
+                linear-gradient(135deg, 
+                    rgba(255, 255, 255, 0.08) 0%, 
+                    rgba(255, 255, 255, 0.04) 50%, 
+                    rgba(255, 255, 255, 0.08) 100%
+                );
+            backdrop-filter: blur(20px);
+            padding: 3rem 2.5rem;
             border-radius: 16px;
-            box-shadow: 0 0 25px rgba(255, 0, 128, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
-        h1 {
+        .booking-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 25px 70px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        /* ELEGANT HEADER */
+        .booking-header {
             text-align: center;
-            color: #ff4081;
-            font-size: 28px;
-            margin-bottom: 30px;
+            margin-bottom: 2.5rem;
+            position: relative;
         }
 
-        label {
-            font-weight: bold;
-            color: #fff;
-            display: block;
-            margin-bottom: 8px;
+        .booking-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.5);
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
         }
 
-        input[type="text"],
-        input[type="number"] {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            background-color: #333;
-            color: #fff;
-            margin-bottom: 20px;
-            font-size: 16px;
-        }
-
-        input[type="text"]:focus,
-        input[type="number"]:focus {
-            outline: none;
-            box-shadow: 0 0 8px #ff4081;
-        }
-
-        .btn {
-            background-color: #00e676;
-            color: #000;
-            padding: 12px;
-            font-size: 16px;
-            border: none;
-            border-radius: 10px;
-            width: 100%;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background-color: #00c853;
-        }
-
-        .error {
-            color: #ff4d4d;
-            text-align: center;
-            margin-bottom: 20px;
-            font-weight: bold;
+        .booking-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            border-radius: 1px;
         }
 
         .movie-title {
-            color: #ffd54f;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #d4af37;
+            margin-top: 1.5rem;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* MOVIE DETAILS GRID */
+        .movie-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .detail-item {
             text-align: center;
-            font-size: 20px;
-            margin-bottom: 10px;
+        }
+
+        .detail-label {
+            font-family: 'Inter', sans-serif;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+
+        .detail-value {
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* FORM STYLING */
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-label {
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            color: #ffffff;
+            display: block;
+            margin-bottom: 0.6rem;
+            font-size: 0.95rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-control, .form-select {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+            color: #ffffff;
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-select option {
+            background: #1a1a2e;
+            color: #ffffff;
+        }
+
+        /* SEAT SELECTION */
+        .seat-selection {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .seat-selection .form-label {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .seat-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 6px;
+            max-width: 400px;
+            margin: 1.5rem auto;
+        }
+
+        .seat {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+        }
+
+        .seat.available:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: scale(1.05);
+        }
+
+        .seat.selected {
+            background: #d4af37;
+            border-color: #d4af37;
+            color: #000;
+            font-weight: 600;
+        }
+
+        .seat.occupied {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            cursor: not-allowed;
+            opacity: 0.4;
+        }
+
+        .seat-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .legend-seat {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .legend-available { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .legend-selected { background: #d4af37; }
+        .legend-occupied { background: rgba(255, 255, 255, 0.1); opacity: 0.4; }
+
+        /* ELEGANT SUBMIT BUTTON */
+        .btn-book {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.9) 0%, rgba(212, 175, 55, 0.7) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: #000;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            width: 100%;
+            cursor: pointer;
+            text-transform: none;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-book::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-book:hover {
+            background: linear-gradient(135deg, #d4af37 0%, #f4d03f 100%);
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 25px rgba(212, 175, 55, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-book:hover::before {
+            left: 100%;
+        }
+
+        .btn-book:active {
+            transform: translateY(0px);
+        }
+
+        /* ERROR STYLING */
+        .error {
+            color: #f1948a;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            padding: 12px;
+            background: rgba(241, 148, 138, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(241, 148, 138, 0.2);
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .booking-card {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+            
+            .booking-title {
+                font-size: 1.8rem;
+            }
+            
+            .movie-details {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 1.5rem;
+            }
+            
+            .seat-grid {
+                max-width: 300px;
+                gap: 4px;
+            }
+            
+            .seat {
+                width: 26px;
+                height: 26px;
+                font-size: 8px;
+            }
+            
+            .seat-legend {
+                gap: 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .booking-card {
+                padding: 1.5rem 1rem;
+            }
+            
+            .booking-title {
+                font-size: 1.5rem;
+            }
+            
+            .movie-details {
+                padding: 1rem;
+            }
+        }
+
+        /* SUBTLE GLOW EFFECT */
+        .booking-card::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(45deg, 
+                rgba(212, 175, 55, 0.1) 0%, 
+                rgba(133, 193, 233, 0.05) 50%, 
+                rgba(212, 175, 55, 0.1) 100%
+            );
+            border-radius: 17px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .booking-card:hover::before {
+            opacity: 1;
         }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <h1>🎟 Book Your Tickets</h1>
-        <div class="movie-title">Now Booking: <strong>{{ movie.name }}</strong></div>
-
-        {% if error %}
-            <p class="error">{{ error }}</p>
-        {% endif %}
-
-        <form method="POST">
-            <label for="name">Your Name:</label>
-            <input type="text" name="name" placeholder="Enter your name" required>
-
-            <label for="tickets">Number of Tickets:</label>
-            <input type="number" name="tickets" min="1" placeholder="Enter number of tickets" required>
-
-            <button type="submit" class="btn">🎫 Confirm Booking</button>
-        </form>
+    <!-- SUBTLE FLOATING ELEMENTS -->
+    <div class="floating-elements">
+        <div class="floating-element element-1">🎫</div>
+        <div class="floating-element element-2">🎬</div>
     </div>
 
+    <!-- MAIN CONTAINER -->
+    <div class="container booking-container">
+        <div class="booking-card">
+            <div class="booking-header">
+                <h1 class="booking-title">Book Your Experience</h1>
+                <div class="movie-title">{{ movie.name }}</div>
+            </div>
+
+            <div class="movie-details">
+                <div class="detail-item">
+                    <div class="detail-label">Show Time</div>
+                    <div class="detail-value">{{ movie.time }}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Price</div>
+                    <div class="detail-value">₹{{ movie.price }}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Rating</div>
+                    <div class="detail-value">⭐ {{ movie.rating }}/5</div>
+                </div>
+                {% if movie.genre %}
+                <div class="detail-item">
+                    <div class="detail-label">Genre</div>
+                    <div class="detail-value">{{ movie.genre }}</div>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if error %}
+                <div class="error">{{ error }}</div>
+            {% endif %}
+
+            <form method="POST">
+                <div class="form-group">
+                    <label for="name" class="form-label">Your Name</label>
+                    <input type="text" name="name" class="form-control" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tickets" class="form-label">Number of Tickets</label>
+                    <input type="number" name="tickets" class="form-control" min="1" max="10" placeholder="How many tickets?" required>
+                </div>
+
+                {% if theaters %}
+                <div class="form-group">
+                    <label for="theater" class="form-label">Select Theater</label>
+                    <select name="theater" class="form-select" required>
+                        <option value="">Choose your theater</option>
+                        {% for theater in theaters %}
+                        <option value="{{ theater.name }}">{{ theater.name }} - {{ theater.location }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endif %}
+
+                {% if showtimes %}
+                <div class="form-group">
+                    <label for="showtime" class="form-label">Select Showtime</label>
+                    <select name="showtime" class="form-select" required>
+                        <option value="">Choose showtime</option>
+                        {% for time in showtimes %}
+                        <option value="{{ time }}">{{ time }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endif %}
+
+                {% if seats %}
+                <div class="seat-selection">
+                    <label class="form-label">Select Your Seats</label>
+                    <div class="seat-grid">
+                        {% for seat_id, seat_info in seats.items() %}
+                        <div class="seat {{ 'available' if seat_info.available else 'occupied' }}" 
+                             data-seat="{{ seat_id }}"
+                             onclick="toggleSeat(this, '{{ seat_id }}')">
+                            {{ seat_id }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="seat-legend">
+                        <div class="legend-item">
+                            <div class="legend-seat legend-available"></div>
+                            <span>Available</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-seat legend-selected"></div>
+                            <span>Selected</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-seat legend-occupied"></div>
+                            <span>Occupied</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <button type="submit" class="btn-book">
+                    Confirm Booking
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let selectedSeats = [];
+
+        function toggleSeat(element, seatId) {
+            if (element.classList.contains('occupied')) return;
+            
+            if (element.classList.contains('selected')) {
+                element.classList.remove('selected');
+                selectedSeats = selectedSeats.filter(seat => seat !== seatId);
+            } else {
+                element.classList.add('selected');
+                selectedSeats.push(seatId);
+            }
+            
+            updateSelectedSeats();
+        }
+
+        function updateSelectedSeats() {
+            // Remove existing hidden inputs
+            document.querySelectorAll('input[name="seats"]').forEach(input => input.remove());
+            
+            // Add new hidden inputs for selected seats
+            selectedSeats.forEach(seat => {
+                let input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'seats';
+                input.value = seat;
+                document.querySelector('form').appendChild(input);
+            });
+        }
+
+        // Smooth form interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add focus effects to form elements
+            document.querySelectorAll('.form-control, .form-select').forEach(element => {
+                element.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'translateY(-1px)';
+                });
+                
+                element.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'translateY(0px)';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
